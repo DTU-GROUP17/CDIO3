@@ -14,11 +14,11 @@ $(document).ready(function(){
                 $.ajax
                 ({
 
-                    type: "GET",
+                    type: "POST",
                     //sending username and pass
                     url: L_auth,// Oliver and CarlEmil
                     contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
+                    dataType: 'jsonp',
                     //async: false,
                     //sending json object to the auth url
                     data: '{"username": "' + username + '", "password" : "' + password + '"}',
@@ -33,6 +33,7 @@ $(document).ready(function(){
                     success: function (data) {
 
                         if (data.response == 200) { // redirect the user to dashboard
+
                             window.location.replace(L_redirect)
                             //document.location.href = 'dashboard.html'; (using this to test )
 
