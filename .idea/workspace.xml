@@ -2,10 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71ee1c57-6295-4aa5-b18f-7c58113c2418" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/CDIO3.iml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/signin/dist/css/bootstrap.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/signin/dist/js/bootstrap.min.js" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/signin/auth.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/signin/css/layout.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/signin/css/profile.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/signin/js/login.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/signin/js/profile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/signin/profile.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/signin/user.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/signin/dist/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/signin/css/bootstrap.min.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/signin/dist/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/signin/js/bootstrap.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/signin/index.html" afterPath="$PROJECT_DIR$/signin/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -274,12 +284,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1492858707505</updated>
-      <workItem from="1492858708708" duration="20986000" />
+      <workItem from="1492858708708" duration="21012000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20986000" />
+    <option name="totallyTimeSpent" value="21012000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1366" height="740" extended-state="0" />
