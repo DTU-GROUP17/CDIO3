@@ -17,11 +17,11 @@ $(document).ready(function(){
                     type: "POST",
                     //sending username and pass
                     url: L_auth,// Oliver and CarlEmil
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'jsonp',
-                    //async: false,
+                    //contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    async: false,
                     //sending json object to the auth url
-                    data: '{"username": "' + username + '", "password" : "' + password + '"}',
+                    data: '{"userName": "' + username + '", "password" : "' + password + '"}',
                     // call was *not* successful
 
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
