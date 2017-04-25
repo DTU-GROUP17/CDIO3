@@ -17,9 +17,9 @@ $(document).ready(function(){
                     type: "POST",
                     //sending username and pass
                     url: L_auth,// Oliver and CarlEmil
-                    //contentType: "application/json; charset=utf-8",
+                    contentType: "application/json; charset=utf-8",
                     dataType: 'json',
-                    async: false,
+                    //async: false,
                     //sending json object to the auth url
                     data: '{"userName": "' + username + '", "password" : "' + password + '"}',
                     // call was *not* successful
@@ -31,8 +31,8 @@ $(document).ready(function(){
                         $('div#errorshow').addClass("error");
                     }, // error
                     success: function (data) {
-
-                        if (data.response == 200) { // redirect the user to dashboard
+                    
+                        if (data.status == 200) { // redirect the user to dashboard
 
                             window.location.replace(L_redirect)
                             //document.location.href = 'dashboard.html'; (using this to test )
