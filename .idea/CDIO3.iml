@@ -11,5 +11,8 @@
     <orderEntry type="library" name="jquery-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="jQuery-2.0.0" level="application" />
     <orderEntry type="library" name="json-schema-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="datatables" level="application" />
+    <orderEntry type="library" name="jquery.validate" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>

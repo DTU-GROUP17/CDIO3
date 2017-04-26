@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{jQuery-2.0.0, jquery-DefinitelyTyped, json-schema-DefinitelyTyped}" />
+    <file url="PROJECT" libraries="{datatables, jQuery-2.0.0, jquery, jquery-DefinitelyTyped, jquery.validate, json-schema-DefinitelyTyped}" />
   </component>
 </project>
