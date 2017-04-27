@@ -6,7 +6,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/signin/js/profile.js" afterPath="$PROJECT_DIR$/signin/js/profile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/signin/profile.html" afterPath="$PROJECT_DIR$/signin/profile.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -46,8 +45,13 @@
       <file leaf-file-name="user.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/signin/user.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="420">
               <caret line="28" column="3" lean-forward="false" selection-start-line="28" selection-start-column="3" selection-end-line="28" selection-end-column="3" />
+=======
+            <state relative-caret-position="251">
+              <caret line="50" column="9" lean-forward="true" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
+>>>>>>> Stashed changes
               <folding />
             </state>
           </provider>
@@ -348,12 +352,16 @@
       <workItem from="1493049957654" duration="858000" />
       <workItem from="1493110268263" duration="4672000" />
       <workItem from="1493124600301" duration="6640000" />
-      <workItem from="1493211054553" duration="9795000" />
+      <workItem from="1493211054553" duration="10697000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="51655000" />
+=======
+    <option name="totallyTimeSpent" value="49110000" />
+>>>>>>> Stashed changes
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -812,8 +820,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/signin/js/profile.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="364">
           <caret line="65" column="21" lean-forward="false" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
+=======
+        <state relative-caret-position="251">
+          <caret line="50" column="9" lean-forward="true" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
+>>>>>>> Stashed changes
           <folding />
         </state>
       </provider>

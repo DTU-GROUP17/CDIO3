@@ -72,8 +72,35 @@ $(document).ready(function(){
                     }
                 }
 
+<<<<<<< Updated upstream
                 return returns;
             }
+=======
+        "beforeSend" : function(req) {
+            req.setRequestHeader("Authorization", "Bearer "+ getCookie("token"))
+        },
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": urluser,
+        "sServerMethod": "GET",
+        "sAjaxDataProp" : "myData",
+        "getCookie" : getCookie("token"),
+        "aoColumnDefs": [ {
+            "aTargets": [ 0 ],
+            "mData": "download_link",
+
+        }],
+        "dataSrc" : function (data) {
+            console.log(data);
+        },
+
+        "aoColumns": [
+            { "mData": null },
+            { "mData": "LoginId" },
+            { "mData": "Name" },
+            { "mData": "CreatedDate" }
+        ]
+>>>>>>> Stashed changes
 
         }
     });
