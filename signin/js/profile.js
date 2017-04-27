@@ -39,33 +39,43 @@ $(document).ready(function () { //Logout button
 
 $(document).ready(function(){
     $("#table_users").dataTable({
+        "columns": [
+            { "data": "id" },
+            { "data": "name" },
+            { "data": "username" },
+            { "data": "roles" }
+        ],
+        'ajax': {
+            'url': urluser,
+            'type': 'GET',
+            'beforeSend': function (request) {
+                request.setRequestHeader("Authorization", "Bearer "+getCookie("token"));
+            },
+            "dataSrc" : function (data) {
+                var returns = [];
 
-        "beforeSend" : function(req) {
-            req.setRequestHeader("Authorization", "Bearer "+getCookie("token"))
-        },
-        "bProcessing": true,
-        "bServerSide": true,
-        "sAjaxSource": urluser,
-        "sServerMethod": "GET",
-        "sAjaxDataProp" : "myData",
-        "aoColumnDefs": [ {
-            "aTargets": [ 0 ],
-            "mData": "download_link",
-            "mRender": function ( data) {
-                return '<a href="http://localhost:9998/self='+data+'">ID</a>';
+                for (var i = 0; i < data.length; i++) {
+                    var rolesString = "";
+                    var roles = data[i].roles;
+
+                    if(roles.length >= 0) {
+                        rolesString += roles[0].name;
+                    }
+                    for (var j = 1; j < roles.length; j++) {
+                        rolesString += ", " + (roles[j].name);
+                    }
+                    returns[i] = {
+                        "id" : data[i].id,
+                        "name" : data[i].name,
+                        "username" : data[i].userName,
+                        "roles" : rolesString
+                    }
+                }
+
+                return returns;
             }
-        }],
-        "dataSrc" : function (data) {
-            console.log(data);
-        },
 
-        "aoColumns": [
-            { "mData": null },
-            { "mData": "LoginId" },
-            { "mData": "Name" },
-            { "mData": "CreatedDate" }
-        ]
-
+        }
     });
 
 
