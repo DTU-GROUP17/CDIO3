@@ -6,7 +6,10 @@ var urluser = 'http://localhost:9998/users';
  * Created by AliGht on 25/04/2017.
  */
 
+
+
 function getCookie(cname) {
+
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
@@ -33,24 +36,42 @@ $(document).ready(function () { //Logout button
 });
 
 
+
 $(document).ready(function(){
-    $("#table_users").DataTable({
-        "ajax" : {
-            "url": urluser,
-            "type" : "GET",
-            "beforeSend" : function(req) {
-                req.setRequestHeader("Authorization", "Bearer "+getCookie("token"))
-            },
-            data: '{"name": "' + name + '",+ "userName": "' + username + '", "password" : "' + password + '"}',
-            "columns": [
-                {"data": "Id"},
-                {"data": "name"},
-                {"data": "username"},
-                {"data": "password"},
-                { "data": "functions", "sClass": "functions" }
-            ],
+    $("#table_users").dataTable({
+
+        "beforeSend" : function(req) {
+            req.setRequestHeader("Authorization", "Bearer "+getCookie("token"))
+        },
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": urluser,
+        "sServerMethod": "GET",
+        "sAjaxDataProp" : "myData",
+        "aoColumnDefs": [ {
+            "aTargets": [ 0 ],
+            "mData": "download_link",
+            "mRender": function ( data) {
+                return '<a href="http://localhost:9998/self='+data+'">ID</a>';
+            }
+        }],
+        "dataSrc" : function (data) {
+            console.log(data);
+        },
+
+        "aoColumns": [
+            { "mData": null },
+            { "mData": "LoginId" },
+            { "mData": "Name" },
+            { "mData": "CreatedDate" }
+        ]
+
+    });
+
+
+            /*
             "aoColumnDefs": [
-                {"bSortable": false, "aTargets": [-1]}
+                {"bSortable": false, "aTargets": [0]}
             ],
             "lengthMenu": [[10, 25, 50], [10, 25, "All"]],
             "oLanguage": {
@@ -64,14 +85,14 @@ $(document).ready(function(){
                 "sInfo": "Total of _TOTAL_ records (showing _START_ to _END_)",
                 "sInfoFiltered": "(filtered from _MAX_ total records)"
             },
-            "dataSrc" : function (data) {
-                console.log(data);
-            }
-        }
+            */
 
 
-    });
 
+
+
+
+    /*
 
         jQuery.validator.setDefaults({
                 success: 'valid',
@@ -327,7 +348,7 @@ $(document).ready(function(){
 
 
 
-
+*/
 
 
 
