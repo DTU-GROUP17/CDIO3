@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=1000, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Profile</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="css/profile.css" rel="stylesheet">
+
+    <!-- Custom js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+    <script charset="utf-8" src="https://cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
+    <script src="js/profile.js"></script>
+
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 pull-right btnlgt">
+                <a href="#" class="btn btn-danger" id="btnlgout">
+                <span class="glyphicon glyphicon-log-out"></span> Log out
+            </a>
+        </div>
+            <div class="col-md-12">
+                    <div id="page_container">
+
+                        <h1>User Panel</h1>
+
+                        <button type="button" class="button" id="add_user">Add User</button>
+
+                        <table class="datatable" id="table_users">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th  id="thname">Name</th>
+                                    <th>Username</th>
+                                    <th>Roles</th>
+                                    <th>Functions</th>
+                                </tr>
+                                </thead>
+                        </table>
+
+                        <div class="lightbox_bg"></div>
+
+                        <div class="lightbox_container">
+                            <div class="lightbox_close"></div>
+                            <div class="lightbox_content">
+
+                              <h2>Add user</h2>
+                                <form class="form add" id="form_user" data-id="" novalidate>
+                                    <div class="input_container">
+                                        <label for="name">Name: <span class="required">*</span></label>
+                                        <div class="field_container">
+                                            <input type="text" step="1" min="0" class="text" name="name" id="name" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="input_container">
+                                        <label for="Username">Username: <span class="required">*</span></label>
+                                        <div class="field_container">
+                                            <input type="text" class="text" name="username" id="username" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="input_container">
+                                        <label for="password">Password: <span class="required">*</span></label>
+                                        <div class="field_container">
+                                            <input type="text" step="1" min="0" class="text" name="password" id="password" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="input_container">
+                                        <label for="roles">Roles: <span class="required">*</span></label>
+                                        <div class="field_container">
+                                            <input type="text" step="1" min="0" class="text" name="roles" id="roles" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="button_container">
+                                        <button type="submit">Add user</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <noscript id="noscript_container">
+                                <div id="noscript" class="error">
+                                    <p>JavaScript support is needed to use this page.</p>
+                                </div>
+                            </noscript>
+
+                            <div id="message_container">
+                                <div id="message" class="success">
+                                    <p>This is a success message.</p>
+                                </div>
+                            </div>
+
+                            <div id="loading_container">
+                                <div id="loading_container2">
+                                    <div id="loading_container3">
+                                        <div id="loading_container4">
+                                            Loading, please wait...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                <div class="user_d" style="display: none"></div>
+            </div>
+        <div class="col-md-2"></div>
+    </div>
+
+</div>
+
+</body>
+</html>
