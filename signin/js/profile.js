@@ -2,7 +2,9 @@
 var log_out = 'index.html';
 var urluser = 'http://localhost:9998/users';
 var rolea = JSON.stringify(['admin', "pharmacist"]);
-console.log(rolea);
+
+
+
 
 /**
  * Created by AliGht on 25/04/2017.
@@ -55,8 +57,7 @@ $(document).ready(function(){
             { "data": "name" },
             { "data": "username" },
             { "data": "roles" },
-
-
+            {"defaultContent": "<button id='delBt'>Delete</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button id='edBt'>Edit</button>"},
 
 
 
@@ -199,12 +200,22 @@ $(document).on('click', '#add_user', function(e){
     $('#form_user #password').val('');
     $('#form_user #roles').val('');
     show_lightbox();
+
 });
 
 
 // Add user submit form
 $(document).on('submit', '#form_user.add', function(e) {
     e.preventDefault();
+
+
+    //var rolea = JSON.stringify(['admin', "pharmacist"]);
+
+    var roles = [];
+    if($("#rolePharmacist").is(':checked'))roles.push('pharmacist');
+    if($("#roleUser").is(':checked'))roles.push('user');
+//alert(roles);
+
     // Validate form
         // Send user information to database
         hide_ipad_keyboard();
@@ -212,13 +223,14 @@ $(document).on('submit', '#form_user.add', function(e) {
         show_loading_message();
        $.ajax
        ({
-            url: urluser,  //
-            cache: false,
-            data: '{"userName": "' + username.value + '", "password" : "' + password.value + '", "name": "' + name.value + '", "roles": ' + rolea + '}',
-            //form_user == data,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            type: 'POST',
+
+           url: urluser,  //
+           cache: false,
+           data: '{"name": "' + $("#name").val() + '", "userName" : "' + username.value + '", "password": "' + password.value + '", "roles": ' + roles.value + '}',
+           dataType: 'json',
+           contentType: 'application/json; charset=utf-8',
+           type: 'POST',
+           sucess : window.location.reload(),
            'beforeSend': function (request) {
                request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
            },
@@ -230,4 +242,36 @@ return false;
 
 });
 
-// Duran herfra 
+
+// Delete user
+$(document).on('click', '#delBt', function(e) {
+    e.preventDefault();
+
+
+
+    $.ajax
+    ({
+
+
+        url: urluser,  //
+        cache: false,
+        data:  null,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        type: 'DELETE',
+        sucess : window.location.reload(),
+        'beforeSend': function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
+        },
+    });
+
+
+    return false;
+
+
+});
+
+
+
+
+// Duran herfra
