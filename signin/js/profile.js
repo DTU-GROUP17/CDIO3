@@ -55,6 +55,7 @@ $(document).ready(function(){
             { "data": "name" },
             { "data": "username" },
             { "data": "roles" },
+            { "data": "functions"}
 
 
 
@@ -86,8 +87,14 @@ $(document).ready(function(){
                         "id": data[i].id,
                         "name": data[i].name,
                         "username": data[i].userName,
-                        "roles": rolesString
+                        "roles": rolesString,
+                        "functions": function ( data, type, full, meta )
+                    {
+                        return '<a href="' + data + '">Delete</a>';
                     }
+                    }
+
+
 
 
                 }
@@ -232,3 +239,10 @@ return false;
 
 // Duran herfra
 
+function createButton(){
+    //var $input = $('<input type="button" value="new button" />');
+    //$input.appendTo($("body"));
+
+    var $input = $('<a href="index.html">delete user</a>');
+
+}
