@@ -1,6 +1,8 @@
 
 var log_out = 'index.html';
 var urluser = 'http://localhost:9998/users';
+var rolea = JSON.stringify(['admin', "pharmacist"]);
+console.log(rolea);
 
 /**
  * Created by AliGht on 25/04/2017.
@@ -25,6 +27,10 @@ function getCookie(cname) {
     return "";
 }
 
+
+
+
+
 $(document).ready(function () { //Logout button
 
     $("#btnlgout").click(function () {
@@ -42,12 +48,17 @@ $(document).ready(function () { //Logout button
 $(document).ready(function(){
     $("#table_users").dataTable({
 
+
+
         "columns": [
             { "data": "id" },
             { "data": "name" },
             { "data": "username" },
             { "data": "roles" },
-            //{"data": "functions", "sClass": "functions" }
+
+
+
+
 
         ],
         'ajax': {
@@ -58,8 +69,6 @@ $(document).ready(function(){
             'beforeSend': function (request) {
                 request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
             },
-
-
             "dataSrc": function (data) {
                 var returns = [];
                 for (var i = 0; i < data.length; i++) {
@@ -79,279 +88,206 @@ $(document).ready(function(){
                         "username": data[i].userName,
                         "roles": rolesString
                     }
+
+
                 }
 
                 console.log(returns);
                 return returns;
             }
+
         }
+
+
+
 
 
     });
 
-
-    jQuery.validator.setDefaults({
-        success: 'valid',
-        rules: {
-            fiscal_year: {
-                required: true,
-            }
-        },
-        errorPlacement: function(error, element){
-            error.insertBefore(element);
-        },
-        highlight: function(element){
-            $(element).parent('.field_container').removeClass('valid').addClass('error');
-        },
-        unhighlight: function(element){
-            $(element).parent('.field_container').addClass('valid').removeClass('error');
-        }
-    });
+});
 
 
-    var form_company = $('#form_user');
-    //form_user.validate();
 
-    // Show message
-    function show_message(message_text, message_type){
-        $('#message').html('<p>' + message_text + '</p>').attr('class', message_type);
-        $('#message_container').show();
-        if (typeof timeout_message !== 'undefined'){
-            window.clearTimeout(timeout_message);
-        }
-        timeout_message = setTimeout(function(){
-            hide_message();
-        }, 8000);
-    }
-    // Hide message
-    function hide_message(){
-        $('#message').html('').attr('class', '');
-        $('#message_container').hide();
-    }
+var form_user = $('#form_user');
 
-    // Show loading message
-    function show_loading_message(){
-        $('#loading_container').show();
-    }
-    // Hide loading message
-    function hide_loading_message(){
-        $('#loading_container').hide();
-    }
 
-    // Show lightbox
-    function show_lightbox(){
-        $('.lightbox_bg').show();
-        $('.lightbox_container').show();
-    }
-    // Hide lightbox
-    function hide_lightbox(){
-        $('.lightbox_bg').hide();
-        $('.lightbox_container').hide();
-    }
-    // Lightbox background
-    $(document).on('click', '.lightbox_bg', function(){
+
+// Hide message
+function hide_message(){
+    $('#message').html('').attr('class', '');
+    $('#message_container').hide();
+}
+
+// Show loading message
+function show_loading_message(){
+    $('#loading_container').show();
+}
+// Hide loading message
+function hide_loading_message(){
+    $('#loading_container').hide();
+}
+
+// Show lightbox
+function show_lightbox(){
+    $('.lightbox_bg').show();
+    $('.lightbox_container').show();
+}
+// Hide lightbox
+function hide_lightbox(){
+    $('.lightbox_bg').hide();
+    $('.lightbox_container').hide();
+}
+// Lightbox background
+$(document).on('click', '.lightbox_bg', function(){
+    hide_lightbox();
+});
+// Lightbox close button
+$(document).on('click', '.lightbox_close', function(){
+    hide_lightbox();
+});
+// Escape keyboard key
+$(document).keyup(function(e){
+    if (e.keyCode == 27){
         hide_lightbox();
-    });
-    // Lightbox close button
-    $(document).on('click', '.lightbox_close', function(){
-        hide_lightbox();
-    });
-    // Escape keyboard key
-    $(document).keyup(function(e){
-        if (e.keyCode == 27){
-            hide_lightbox();
-        }
-    });
-
-    // Hide iPad keyboard
-    function hide_ipad_keyboard(){
-        document.activeElement.blur();
-        $('input').blur();
     }
+});
 
 
+// Show lightbox
+function show_lightbox(){
+    $('.lightbox_bg').show();
+    $('.lightbox_container').show();
+}
+// Hide lightbox
+function hide_lightbox(){
+    $('.lightbox_bg').hide();
+    $('.lightbox_container').hide();
+}
+// Lightbox background
+$(document).on('click', '.lightbox_bg', function(){
+    hide_lightbox();
+});
+// Lightbox close button
+$(document).on('click', '.lightbox_close', function(){
+    hide_lightbox();
+});
+// Escape keyboard key
+$(document).keyup(function(e){
+    if (e.keyCode == 27){
+        hide_lightbox();
+    }
+});
+
+// Hide iPad keyboard
+function hide_ipad_keyboard(){
+    document.activeElement.blur();
+    $('input').blur();
+}
+
+// Add user button
+$(document).on('click', '#add_user', function(e){
+
+    e.preventDefault();
+    $('.lightbox_content h2').text('Add User');
+    $('#form_user button').text('Add User');
+    $('#form_user').attr('class', 'form add');
+    $('#form_user').attr('data-id', '');
+    $('#form_user .field_container label.error').hide();
+    $('#form_user .field_container').removeClass('valid').removeClass('error');
+    $('#form_user #name').val('');
+    $('#form_user #username').val('');
+    $('#form_user #password').val('');
+    $('#form_user #roles').val('');
+    show_lightbox();
+});
 
 
-    // Add users button
-    $(document).on('click', '#add_user', function (e) {
-        e.preventDefault();
-        $('.lightbox_content h2').text('Add user');
-        $('#form_user button').text('Add user');
-        $('#form_user').attr('class', 'form add');
-        $('#form_user').attr('data-id', '');
-        $('#form_user .field_container label.error').hide();
-        $('#form_user .field_container').removeClass('valid').removeClass('error');
-        $('#form_user #name').val('');
-        $('#form_user #username').val('');
-        $('#form_user #password').val('');
-        show_lightbox();
-    });
-
-    // Add user submit form
-    $(document).on('submit', '#form_user.add', function (e) {
-        e.preventDefault();
-        // Validate form
-        if (form_user.valid() == true) {
-            // Send user information to database (server)
-            hide_ipad_keyboard();
-            hide_lightbox();
-            show_loading_message();
-            var form_data = $('#form_user').serialize();
-            var request = $.ajax({
-                url: 'http://localhost:9998/users', // Adding url (Oliver) ****************
-                cache: false,
-                data: form_data,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                type: 'POST'
-            });
-            request.done(function (output) {
-                if (output.result == 'success') {
-                    // Reload datable
-                    table_users.api().ajax.reload(function () {
-                        hide_loading_message();
-                        var user_name = $('#username').val();
-                        show_message("User '" + user_name + "' added successfully.", 'success');
-                    }, true);
-                } else {
-                    hide_loading_message();
-                    show_message('Add request failed', 'error');
-                }
-            });
-            request.fail(function (jqXHR, textStatus) {
-                hide_loading_message();
-                show_message('Add request failed: ' + textStatus, 'error');
-            });
-        }
-    });
-
-    // Edit user button
-    $(document).on('click', '.function_edit a', function (e) {
-        e.preventDefault();
-        // Get users information from database/server
+// Add user submit form
+$(document).on('submit', '#form_user.add', function(e) {
+    e.preventDefault();
+    // Validate form
+        // Send user information to database
+        hide_ipad_keyboard();
+        hide_lightbox();
         show_loading_message();
-        var id = $(this).data('id');
-        var request = $.ajax({
-            url: 'http://localhost:9998/authentication/login',  //url Oliver **********************
+       $.ajax
+       ({
+            url: urluser,  //
             cache: false,
-            data: 'id=' + id,
+            data: '{"userName": "' + username.value + '", "password" : "' + password.value + '", "name": "' + name.value + '", "roles": ' + rolea + '}',
+            //form_user == data,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            type: 'POST'
-        });
-
-        request.done(function (output) {
-            if (output.result == 'success') {
-                $('.lightbox_content h2').text('Edit user');
-                $('#form_user button').text('Edit user');
-                $('#form_user').attr('class', 'form edit');
-                $('#form_user').attr('data-id', id);
-                $('#form_user .field_container label.error').hide();
-                $('#form_user .field_container').removeClass('valid').removeClass('error');
-                $('#form_user #id').val(output.data[0].name);
-                $('#form_user #name').val(output.data[0].name);
-                $('#form_user #username').val(output.data[0].username);
-                $('#form_user #password').val(output.data[0].password);
-                hide_loading_message();
-                show_lightbox();
-            } else {
-                hide_loading_message();
-                show_message('Information request failed', 'error');
-            }
-        });
-
-        request.fail(function (jqXHR, textStatus) {
-            hide_loading_message();
-            show_message('Information request failed: ' + textStatus, 'error');
-        });
-    });
-
-    // Edit users submit form
-    $(document).on('submit', '#form_user.edit', function (e) {
-        e.preventDefault();
-        // Validate form
-        if (form_user.valid() == true) {
-            // Send user information to database/server
-            hide_ipad_keyboard();
-            hide_lightbox();
-            show_loading_message();
-            var id = $('#form_user').attr('data-id');
-            var form_data = $('#form_user').serialize();
-            var request = $.ajax({
-                url: '' + id, // Url Oliver ***********************
-                cache: false,
-                data: form_data,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                type: 'POST'
-            });
-
-            request.done(function (output) {
-                if (output.result == 'success') {
-                    // Reload datable
-                    table_users.api().ajax.reload(function () {
-                        hide_loading_message();
-                        var user_name = $('#user_name').val();
-                        show_message("User '" + user_name + "' edited successfully.", 'success');
-                    }, true);
-                } else {
-                    hide_loading_message();
-                    show_message('Edit request failed', 'error');
-                }
-            });
-            request.fail(function (jqXHR, textStatus) {
-                hide_loading_message();
-                show_message('Edit request failed: ' + textStatus, 'error');
-            });
-        }
-    });
-
-    // Delete user
-    $(document).on('click', '.function_delete a', function (e) {
-        e.preventDefault();
-        var user_name = $(this).data('name');
-        if (confirm("Are you sure you want to delete '" + user_name + "'?")) {
-            show_loading_message();
-            var id = $(this).data('id');
-            var request = $.ajax({
-                url: '' + id,  // Url Oliver ***********************
-                cache: false,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                type: 'POST'
-            });
-            request.done(function (output) {
-                if (output.result == 'success') {
-                    // Reload datable
-                    table_users.api().ajax.reload(function () {
-                        hide_loading_message();
-                        show_message("User '" + user_name + "' deleted successfully.", 'success');
-                    }, true);
-                } else {
-                    hide_loading_message();
-                    show_message('Delete request failed', 'error');
-                }
-            });
-            request.fail(function (jqXHR, textStatus) {
-                hide_loading_message();
-                show_message('Delete request failed: ' + textStatus, 'error');
-            });
-        }
+            type: 'POST',
+           'beforeSend': function (request) {
+               request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
+           },
     });
 
 
-
-
-
-
-
-
-
-
-
+return false;
 
 
 });
+
+
+/*
+$(document).ready(function(){
+    $("#btnlogin").click(function () {
+
+
+        var username = $("#inputUsername").val(); // getting username
+        var password = $("#inputPassword").val(); // getting password
+
+        if (username && password) { // values are not empty
+
+            $.ajax
+            ({
+
+                type: "POST",
+                //sending username and pass
+                url: L_auth,// Oliver and CarlEmil
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                //async: false,
+                //sending json object to the auth url
+                data: '{"userName": "' + username + '", "password" : "' + password + '"}',
+                // call was *not* successful
+
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('div#loginResult').show();
+                     $('div#errorshow').text("responseText: " + XMLHttpRequest.responseText // made this as comment to not show the server message to user
+                     + ", textStatus: " + textStatus
+                     + ", errorThrown: " + errorThrown);
+                     $('div#errorshow').addClass("error");
+
+                }, // error
+                success: function (data) {
+
+                    if (data.status == 200) { // redirect the user to dashboard
+                        document.cookie = "token="+data.message;
+
+                        window.location.replace(L_redirect)
+                        //document.location.href = 'dashboard.html'; (using this to test )
+
+                    } else if (data.response == 0 || data.error)// if it was not succesful
+                    {
+                        $('div#loginResult').show();
+
+                    } // else
+                } // success
+
+
+            }); // ajax
+
+
+        }
+        return false;
+
+    });
+});
+
+*/
 
 
 

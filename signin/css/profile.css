@@ -57,7 +57,7 @@ input,
 button,
 select {
     background-color: transparent;
-    font-family: 'Oxygen', Arial, Helvetica, sans-serif;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     font-size: 1rem;
     color: #666;
 }
@@ -318,7 +318,7 @@ table.datatable tbody tr:hover td {
 table.datatable tbody tr:hover td.dataTables_empty {
     background-color: #fff;
 }
-table.datatable tbody td.company_name {
+table.datatable tbody td.user_d {
     width: 100%;
 }
 table.datatable tbody td.integer {

@@ -14,6 +14,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
 
 
     <!-- Custom styles for this template -->
@@ -47,7 +48,7 @@
                             <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>Name</th>
+                                    <th  id="thname">Name</th>
                                     <th>Username</th>
                                     <th>Roles</th>
                                     <th>Functions</th>
@@ -79,6 +80,12 @@
                                         <label for="password">Password: <span class="required">*</span></label>
                                         <div class="field_container">
                                             <input type="text" step="1" min="0" class="text" name="password" id="password" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="input_container">
+                                        <label for="roles">Roles: <span class="required">*</span></label>
+                                        <div class="field_container">
+                                            <input type="text" step="1" min="0" class="text" name="roles" id="roles" value="" required>
                                         </div>
                                     </div>
                                     <div class="button_container">
