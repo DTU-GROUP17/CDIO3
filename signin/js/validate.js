@@ -11,7 +11,7 @@ $(document).ready(function() {
 		&& /[a-z]/i.test(value);
 	}, "Your password must be at least 6 characters long and contains at least one number and one character\'.");
 	
-	$('#login_form').validate({
+	$('#loginform').validate({
 	rules: {
 		username: {
 			required: true,
@@ -24,7 +24,7 @@ $(document).ready(function() {
 	},
 	messages: {
 		username: {
-			required: 'Please enter a username.',
+			required: 'Please enter a username.'
 		},
 		password: {
 			required: 'Please enter password',

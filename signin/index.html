@@ -33,16 +33,16 @@
       <form id="loginform" class="form-signin" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputUsername" class="sr-only">Email address</label>
-        <input type="username" id="inputUsername" class="form-control" placeholder="Brugernavn" required autofocus />
+        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Brugernavn" required autofocus />
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Adgangskode" required />
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Adgangskode" required />
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me" /> Remember me
           </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="button" id="btnlogin">login</button>
-          <div id="loginResult" ng-if="loginFailed" class="alert alert-danger alert-dismissible" role="alert" style="display: none">
+          <div id="loginResult" class="alert alert-danger alert-dismissible" role="alert" style="display: none">
               Failed to sign in!
           </div>
           <div id="errorshow"></div>
