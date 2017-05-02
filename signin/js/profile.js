@@ -86,13 +86,12 @@ $(document).ready(function(){
                     }
                     }
 
-                    $('#first-choice').append("<option value=" + data[i].name + " selected='selected'>" + data[i].name + "</option>");
+                    $('#first-choice').append("<option value=" + data[i].userName + " selected='selected'>" + data[i].userName + "</option>");
 
 
                 }
 
                 console.log(returns);
-                $('#table_users').append('<tbody>');
                 return returns;
             }
 
@@ -260,6 +259,7 @@ $('#table_users tbody').on('click', 'tr', function () {
 
 $(document).ready(function () {
 
+    console.log($("#first-choice").val());
     for (i = 0; i < 10; i++) {
     //    $('#first-choice').append('<option value="foo" selected="selected">Foo</option>');
     }
@@ -268,29 +268,38 @@ $(document).ready(function () {
 
 $("#first-choice").change(function() {
 
-    var $dropdown = $(this);
 
-    $.getJSON("jsondata/data.json", function(data) {
 
-        var key = $dropdown.val();
-        var vals = [];
+});
 
-        switch(key) {
-            case 'beverages':
-                vals = data.beverages.split(",");
-                break;
-            case 'snacks':
-                vals = data.snacks.split(",");
-                break;
-            case 'base':
-                vals = ['Please choose from above'];
+$(document).on('click', '#del_user', function(e){
+
+    e.preventDefault();
+
+<!-- not finished ajax call  -->
+    $.ajax({
+        dataType: 'json',
+        contentType: "application/json",
+        type: 'GET',
+        url: 'http://localhost:9998/self',
+        beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Bearer ' + getCookie("token"))}
+    }).done(function (data) {
+
+        for (i = 0; i < data.roles.length; i++) {
+            console.log(data);
+
+            if (data.roles[i].name == "Admin") {
+                role = data.roles[i].name;
+                $('#maincontainer').load("admin_edit.html");
+            } else {
+                role = "Bruger";
+                $('#maincontainer').load("user_edit.html");
+            }
         }
+        console.log("User role is " + role);
 
-        var $secondChoice = $("#second-choice");
-        $secondChoice.empty();
-        $.each(vals, function(index, value) {
-            $secondChoice.append("<option>" + value + "</option>");
-        });
+
 
     });
+
 });
