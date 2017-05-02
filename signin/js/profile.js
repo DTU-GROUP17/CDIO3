@@ -48,19 +48,14 @@ $(document).ready(function () { //Logout button
 $(document).ready(function(){
     $("#table_users").dataTable({
 
-
-
         "columns": [
             { "data": "id" },
             { "data": "name" },
             { "data": "username" },
             { "data": "roles" },
             { "data": "functions"}
-
         ],
         'ajax': {
-
-
             'url': urluser,
             'type': 'GET',
             'beforeSend': function (request) {
@@ -238,6 +233,9 @@ return false;
 
 
 $('a').click(function() {
+
+    //man kunne måske lave noget herinde... dog virker console.log dernede ikke
+
     console.log($(this).attr("id"));
 
 
