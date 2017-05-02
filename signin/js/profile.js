@@ -86,12 +86,13 @@ $(document).ready(function(){
                     }
                     }
 
-
+                    $('#first-choice').append("<option value=" + data[i].name + " selected='selected'>" + data[i].name + "</option>");
 
 
                 }
 
                 console.log(returns);
+                $('#table_users').append('<tbody>');
                 return returns;
             }
 
@@ -236,9 +237,60 @@ $('a').click(function() {
 
     //man kunne måske lave noget herinde... dog virker console.log dernede ikke
 
+    console.log("Hi");
     console.log($(this).attr("id"));
 
 
     //return false;
 
+});
+
+
+
+$(document).ready(function() {
+    var table = $('#table_users').DataTable();
+
+$('#table_users tbody').on('click', 'tr', function () {
+    var data = table.row( this ).data();
+    alert( 'You clicked on '+data[0]+'\'s row' );
+
+} );
+} );
+
+
+$(document).ready(function () {
+
+    for (i = 0; i < 10; i++) {
+    //    $('#first-choice').append('<option value="foo" selected="selected">Foo</option>');
+    }
+})
+
+
+$("#first-choice").change(function() {
+
+    var $dropdown = $(this);
+
+    $.getJSON("jsondata/data.json", function(data) {
+
+        var key = $dropdown.val();
+        var vals = [];
+
+        switch(key) {
+            case 'beverages':
+                vals = data.beverages.split(",");
+                break;
+            case 'snacks':
+                vals = data.snacks.split(",");
+                break;
+            case 'base':
+                vals = ['Please choose from above'];
+        }
+
+        var $secondChoice = $("#second-choice");
+        $secondChoice.empty();
+        $.each(vals, function(index, value) {
+            $secondChoice.append("<option>" + value + "</option>");
+        });
+
+    });
 });
