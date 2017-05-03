@@ -11,28 +11,24 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/datatables.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <title>Profile</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-theme.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/datatables.min.css"/>
+
 
     <!-- Custom styles for this template -->
     <link href="css/profile.css" rel="stylesheet">
 
-    <!-- Custom js -->
-
-
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/datatables.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
-    <script charset="utf-8" src="https://cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+    <script charset="utf-8" src="https://cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
     <script src="js/profile.js"></script>
-
 </head>
 <body>
     <div class="container">
@@ -78,30 +74,39 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Create new user</h4>
                         </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" action='' method="POST">
-                                <fieldset>
-                                    <div class="control-group">
-                                        <label class="control-label"  for="username">Username</label>
-                                        <input type="text" id="username" name="username" placeholder="" class="form-control">
-                                    </div>
+                        <form id="createUserForm" onsubmit="createUser(event)">
+                            <div class="modal-body">
+                                    <fieldset>
+                                        <div class="control-group">
+                                            <label class="control-label"  for="username">Username</label>
+                                            <input required type="text" id="username" name="username" placeholder="" class="form-control">
+                                        </div>
 
-                                    <div class="control-group">
-                                        <label class="control-label" for="email">E-mail</label>
-                                        <input type="text" id="email" name="email" placeholder="" class="form-control">
-                                    </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="name">Name</label>
+                                            <input required type="text" id="name" name="name" placeholder="" class="form-control">
+                                        </div>
 
-                                    <div class="control-group">
-                                        <label class="control-label" for="password">Password</label>
-                                        <input type="password" id="password" name="password" placeholder="" class="form-control">
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-success">Register</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="password">Password</label>
+                                            <input required type="password" id="password" name="password" placeholder="" class="form-control">
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label" for="roles">Roles</label> <br>
+                                            <select class="selectpicker" id="roles" multiple>
+                                                <option>admin</option>
+                                                <option>user</option>
+                                            </select>
+                                        </div>
+
+                                    </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Register</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
                     </div>
 
                 </div>
@@ -110,4 +115,6 @@
         </div>
     </div>
 </body>
+
+
 </html>

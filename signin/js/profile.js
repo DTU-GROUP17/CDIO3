@@ -59,8 +59,36 @@ function deleteUser(user_id) {
     });
 }
 
-function createUser() {
+function createUser(event) {
+    var formData = $('#createUserForm').serializeArray();
 
+    var data = {
+        "name": formData[1].value,
+        "userName": formData[0].value,
+        "password": formData[2].value,
+        "roles": $('#roles').val()
+    };
+
+    $.ajax({
+        'beforeSend': function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
+        },
+        'url': urluser,
+        'type': 'POST',
+        'data': JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+    }).fail(function(data) {
+        if(data.status !== 200) {
+            alert("failed creating user!");
+        }
+    });
+
+    $('#createUser').modal('toggle');
+
+    //table.ajax.reload();
+
+    event.preventDefault();
+    return false;
 }
 
 
@@ -70,78 +98,71 @@ $(document).ready(function(){
     });
 
 
-
     $("#table_users").dataTable({
         "searching": false,
         "paging": false,
-        "info" : false,
-        "sort" : false,
+        "info": false,
+        "sort": false,
         "columns": [
-            { "data": "id" },
-            { "data": "name",
-                "render" : function ( data, type, full) {
-                    return '<input type="text" class="form-control" id="name_'+full.id+'" value="'+data+'" onchange="changeUser(\''+full.id+'\', \'name\')">';
+            {"data": "id"},
+            {
+                "data": "name",
+                "render": function (data, type, full) {
+                    return '<input type="text" class="form-control" id="name_' + full.id + '" value="' + data + '" onchange="changeUser(\'' + full.id + '\', \'name\')">';
                 },
             },
-            { "data": "username",
-                "render" : function ( data, type, full) {
-                    return '<input type="text" class="form-control" id="userName_'+full.id+'" value="'+data+'" onchange="changeUser(\''+full.id+'\', \'userName\')">';
+            {
+                "data": "username",
+                "render": function (data, type, full) {
+                    return '<input type="text" class="form-control" id="userName_' + full.id + '" value="' + data + '" onchange="changeUser(\'' + full.id + '\', \'userName\')">';
                 },
-
             },
             {
                 "data": "roles",
-                "render" : function (data, type, full) {
+                "render": function (data, type, full) {
                     var selected = [];
-                    for(var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data.length; i++) {
                         selected.push(data[i].name);
                     }
-                    var $selectPicker = $('#roles_'+full.id);
+                    var $selectPicker = $('#roles_' + full.id);
                     $selectPicker.selectpicker('val', selected);
-
-
                     $selectPicker.on('changed.bs.select', function (e) {
                         roles = {
-                            'roles' : $(e.currentTarget).val()
+                            'roles': $(e.currentTarget).val()
                         };
-
                         $.ajax({
                             'beforeSend': function (request) {
                                 request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
                             },
-                            'url': urluser+full.id,
+                            'url': urluser + full.id,
                             'type': 'PATCH',
                             'data': JSON.stringify(roles),
                             contentType: 'application/json; charset=utf-8',
                         })
-                            .fail(function(data) {
-                                if(data.status !== 200) {
+                            .fail(function (data) {
+                                if (data.status !== 200) {
                                     alert("failed deleting user!");
                                 }
                             });
                     });
-                    return '<select class="selectpicker" id="roles_'+full.id+'" multiple><option>admin</option><option>user</option></select>';
-                }
-
-            },
-            {
-                "render" : function(data, type, full) {
-                    return '<input type="password" class="form-control" id="password_'+full.id+'" placeholder="********" onchange="changeUser(\''+full.id+'\', \'password\')">';
+                    return '<select class="selectpicker" id="roles_' + full.id + '" multiple><option>admin</option><option>user</option></select>';
                 }
             },
             {
-                "render" : function(data, type, full) {
-                    return '<button type="button" class="btn btn-xs btn-danger" onclick="deleteUser(\''+full.id+'\')"><span class="glyphicon glyphicon glyphicon-remove"></span>&nbsp;</button>';
+                "render": function (data, type, full) {
+                    return '<input type="password" class="form-control" id="password_' + full.id + '" placeholder="********" onchange="changeUser(\'' + full.id + '\', \'password\')">';
+                }
+            },
+            {
+                "render": function (data, type, full) {
+                    return '<button type="button" class="btn btn-xs btn-danger" onclick="deleteUser(\'' + full.id + '\')"><span class="glyphicon glyphicon glyphicon-remove"></span>&nbsp;</button>';
                 }
             }
-
         ],
-        "drawCallback": function( settings ) {
+        "drawCallback": function (settings) {
             $('.selectpicker').selectpicker();
         },
         'ajax': {
-
-
             'url': urluser,
             'type': 'GET',
             'beforeSend': function (request) {
@@ -159,10 +180,7 @@ $(document).ready(function(){
                 }
                 return returns;
             }
-
         }
-
-
     });
 });
 
