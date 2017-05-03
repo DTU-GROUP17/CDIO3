@@ -1,16 +1,6 @@
 
 var log_out = 'index.html';
-var urluser = 'http://localhost:9998/users';
-var rolea = JSON.stringify(['admin', "pharmacist"]);
-
-
-
-
-/**
- * Created by AliGht on 25/04/2017.
- */
-
-
+var urluser = 'http://localhost:9998/users/';
 
 function getCookie(cname) {
 
@@ -29,39 +19,126 @@ function getCookie(cname) {
     return "";
 }
 
+function changeUser(user_id, type) {
+    var val = $('#'+type+'_'+user_id).val();
 
+    var data  = {};
+    data[type] = val;
 
+    $.ajax({
+        'beforeSend': function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
+        },
+        'url': urluser+user_id,
+        'type': 'PATCH',
+        'data': JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+    }).done(function(data) {
+        })
+    .fail(function(data) {
+        if(data.status !== 200) {
+            alert("failed updating user!");
+        }
+    });
+}
 
-
-$(document).ready(function () { //Logout button
-
-    $("#btnlgout").click(function () {
-        window.location.replace(log_out);
+function deleteUser(user_id) {
+    console.log("delete"+user_id);
+    $.ajax({
+        'beforeSend': function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
+        },
+        'url': urluser+user_id,
+        'type': 'DELETE',
+        contentType: 'application/json; charset=utf-8',
     })
+    .fail(function(data) {
+        if(data.status !== 200) {
+            alert("failed deleting user!");
+        }
+    });
+}
 
+function createUser() {
 
-
-});
-
-
-
+}
 
 
 $(document).ready(function(){
+    $("#logout").click(function () {
+        window.location.replace(log_out);
+    });
+
+
+
     $("#table_users").dataTable({
-
-
-
+        "searching": false,
+        "paging": false,
+        "info" : false,
+        "sort" : false,
         "columns": [
             { "data": "id" },
-            { "data": "name" },
-            { "data": "username" },
-            { "data": "roles" },
-            {"defaultContent": "<button id='delBt'>Delete</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button id='edBt'>Edit</button>"},
+            { "data": "name",
+                "render" : function ( data, type, full) {
+                    return '<input type="text" class="form-control" id="name_'+full.id+'" value="'+data+'" onchange="changeUser(\''+full.id+'\', \'name\')">';
+                },
+            },
+            { "data": "username",
+                "render" : function ( data, type, full) {
+                    return '<input type="text" class="form-control" id="userName_'+full.id+'" value="'+data+'" onchange="changeUser(\''+full.id+'\', \'userName\')">';
+                },
+
+            },
+            {
+                "data": "roles",
+                "render" : function (data, type, full) {
+                    var selected = [];
+                    for(var i = 0; i < data.length; i++) {
+                        selected.push(data[i].name);
+                    }
+                    var $selectPicker = $('#roles_'+full.id);
+                    $selectPicker.selectpicker('val', selected);
 
 
+                    $selectPicker.on('changed.bs.select', function (e) {
+                        roles = {
+                            'roles' : $(e.currentTarget).val()
+                        };
+
+                        $.ajax({
+                            'beforeSend': function (request) {
+                                request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
+                            },
+                            'url': urluser+full.id,
+                            'type': 'PATCH',
+                            'data': JSON.stringify(roles),
+                            contentType: 'application/json; charset=utf-8',
+                        })
+                            .fail(function(data) {
+                                if(data.status !== 200) {
+                                    alert("failed deleting user!");
+                                }
+                            });
+                    });
+                    return '<select class="selectpicker" id="roles_'+full.id+'" multiple><option>admin</option><option>user</option></select>';
+                }
+
+            },
+            {
+                "render" : function(data, type, full) {
+                    return '<input type="password" class="form-control" id="password_'+full.id+'" placeholder="********" onchange="changeUser(\''+full.id+'\', \'password\')">';
+                }
+            },
+            {
+                "render" : function(data, type, full) {
+                    return '<button type="button" class="btn btn-xs btn-danger" onclick="deleteUser(\''+full.id+'\')"><span class="glyphicon glyphicon glyphicon-remove"></span>&nbsp;</button>';
+                }
+            }
 
         ],
+        "drawCallback": function( settings ) {
+            $('.selectpicker').selectpicker();
+        },
         'ajax': {
 
 
@@ -73,205 +150,19 @@ $(document).ready(function(){
             "dataSrc": function (data) {
                 var returns = [];
                 for (var i = 0; i < data.length; i++) {
-                    var rolesString = "";
-                    var roles = data[i].roles;
-
-                    if (roles.length >= 0) {
-                        rolesString += roles[0].name;
-                    }
-                    for (var j = 1; j < roles.length; j++) {
-                        rolesString += ", " + (roles[j].name);
-                    }
-
                     returns[i] = {
                         "id": data[i].id,
                         "name": data[i].name,
                         "username": data[i].userName,
-                        "roles": rolesString
+                        "roles": data[i].roles
                     }
-
-
                 }
-
-                console.log(returns);
                 return returns;
             }
 
         }
 
 
-
-
-
     });
-
 });
 
-
-
-var form_user = $('#form_user');
-
-
-
-// Hide message
-function hide_message(){
-    $('#message').html('').attr('class', '');
-    $('#message_container').hide();
-}
-
-// Show loading message
-function show_loading_message(){
-    $('#loading_container').show();
-}
-// Hide loading message
-function hide_loading_message(){
-    $('#loading_container').hide();
-}
-
-// Show lightbox
-function show_lightbox(){
-    $('.lightbox_bg').show();
-    $('.lightbox_container').show();
-}
-// Hide lightbox
-function hide_lightbox(){
-    $('.lightbox_bg').hide();
-    $('.lightbox_container').hide();
-}
-// Lightbox background
-$(document).on('click', '.lightbox_bg', function(){
-    hide_lightbox();
-});
-// Lightbox close button
-$(document).on('click', '.lightbox_close', function(){
-    hide_lightbox();
-});
-// Escape keyboard key
-$(document).keyup(function(e){
-    if (e.keyCode == 27){
-        hide_lightbox();
-    }
-});
-
-
-// Show lightbox
-function show_lightbox(){
-    $('.lightbox_bg').show();
-    $('.lightbox_container').show();
-}
-// Hide lightbox
-function hide_lightbox(){
-    $('.lightbox_bg').hide();
-    $('.lightbox_container').hide();
-}
-// Lightbox background
-$(document).on('click', '.lightbox_bg', function(){
-    hide_lightbox();
-});
-// Lightbox close button
-$(document).on('click', '.lightbox_close', function(){
-    hide_lightbox();
-});
-// Escape keyboard key
-$(document).keyup(function(e){
-    if (e.keyCode == 27){
-        hide_lightbox();
-    }
-});
-
-// Hide iPad keyboard
-function hide_ipad_keyboard(){
-    document.activeElement.blur();
-    $('input').blur();
-}
-
-// Add user button
-$(document).on('click', '#add_user', function(e){
-
-    e.preventDefault();
-    $('.lightbox_content h2').text('Add User');
-    $('#form_user button').text('Add User');
-    $('#form_user').attr('class', 'form add');
-    $('#form_user').attr('data-id', '');
-    $('#form_user .field_container label.error').hide();
-    $('#form_user .field_container').removeClass('valid').removeClass('error');
-    $('#form_user #name').val('');
-    $('#form_user #username').val('');
-    $('#form_user #password').val('');
-    $('#form_user #roles').val('');
-    show_lightbox();
-
-});
-
-
-// Add user submit form
-$(document).on('submit', '#form_user.add', function(e) {
-    e.preventDefault();
-
-
-    //var rolea = JSON.stringify(['admin', "pharmacist"]);
-
-    var roles = [];
-    if($("#rolePharmacist").is(':checked'))roles.push('pharmacist');
-    if($("#roleUser").is(':checked'))roles.push('user');
-//alert(roles);
-
-    // Validate form
-        // Send user information to database
-        hide_ipad_keyboard();
-        hide_lightbox();
-        show_loading_message();
-       $.ajax
-       ({
-
-           url: urluser,  //
-           cache: false,
-           data: '{"name": "' + $("#name").val() + '", "userName" : "' + username.value + '", "password": "' + password.value + '", "roles": ' + roles.value + '}',
-           dataType: 'json',
-           contentType: 'application/json; charset=utf-8',
-           type: 'POST',
-           sucess : window.location.reload(),
-           'beforeSend': function (request) {
-               request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
-           },
-    });
-
-
-return false;
-
-
-});
-
-
-// Delete user
-$(document).on('click', '#delBt', function(e) {
-    e.preventDefault();
-
-
-
-    $.ajax
-    ({
-
-
-        url: urluser,  //
-        cache: false,
-        data:  null,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        type: 'DELETE',
-        sucess : window.location.reload(),
-        'beforeSend': function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
-        },
-    });
-
-
-    return false;
-
-
-});
-
-
-
-
-// Duran herfra
