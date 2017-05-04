@@ -88,7 +88,7 @@ function initTable() {
             {
                 "data": "roles",
                 "render": function (data, type, full) {
-                    return '<select class="selectpicker" id="roles_' + full.id + '" multiple><option>admin</option><option>user</option></select>';
+                    return '<select class="selectpicker" id="roles_' + full.id + '" multiple disabled><option>admin</option><option>user</option></select>';
                 }
             },
             {
@@ -111,25 +111,6 @@ function initTable() {
 
                 var $selectPicker = $('#roles_' + row.id);
                 $selectPicker.selectpicker('val', selected);
-                $selectPicker.on('changed.bs.select', function (e) {
-                    roles = {
-                        'roles': $(e.currentTarget).val()
-                    };
-                    $.ajax({
-                        'beforeSend': function (request) {
-                            request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
-                        },
-                        'url': urlUser,
-                        'type': 'PATCH',
-                        'data': JSON.stringify(roles),
-                        contentType: 'application/json; charset=utf-8',
-                    })
-                        .fail(function (data) {
-                            if (data.status !== 200) {
-                                alert("failed setting roles!");
-                            }
-                        });
-                });
             });
 
         },
