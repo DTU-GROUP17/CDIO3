@@ -1,7 +1,5 @@
-
+var urlUser = 'http://localhost:9998/self/';
 var log_out = 'index.html';
-var urluser = 'http://localhost:9998/users/';
-
 
 function getCookie(cname) {
 
@@ -30,82 +28,44 @@ function changeUser(user_id, type) {
         'beforeSend': function (request) {
             request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
         },
-        'url': urluser+user_id,
+        'url': urlUser,
         'type': 'PATCH',
         'data': JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
     }).done(function(data) {
-        })
-    .fail(function(data) {
-        if(data.status !== 200) {
-            alert("failed updating user!");
-        }
-    });
+    })
+        .fail(function(data) {
+            if(data.status !== 200) {
+                alert("failed updating user!");
+            }
+            if(type === "userName") {
+                window.location.replace(log_out);
+            }
+        });
 }
 
-function deleteUser(user_id) {
-    console.log("delete"+user_id);
+function deleteUser() {
     $.ajax({
         'beforeSend': function (request) {
             request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
         },
-        'url': urluser+user_id,
+        'url': urlUser,
         'type': 'DELETE',
         contentType: 'application/json; charset=utf-8',
     })
-    .done(function (data) {
-        $("#table_users").DataTable().ajax.reload();
-    })
-    .fail(function(data) {
-        if(data.status !== 200) {
-            alert("failed deleting user!");
-        }
-        $("#table_users").DataTable().ajax.reload();
-    });
+        .done(function (data) {
+            window.location.replace(log_out);
+        })
+        .fail(function(data) {
+            console.log("???"); // PLZ DO not delete, master comment fixer???!
+            if(data.status !== 200) {
+                alert("failed deleting user!");
+            }
+            window.location.replace(log_out);
+        });
 }
 
-function createUser(event) {
-    var formData = $('#createUserForm').serializeArray();
-
-    var data = {
-        "name": formData[1].value,
-        "userName": formData[0].value,
-        "password": formData[2].value,
-        "roles": $('#roles').val()
-    };
-
-    $.ajax({
-        'beforeSend': function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
-        },
-        'url': urluser,
-        'type': 'POST',
-        'data': JSON.stringify(data),
-        contentType: 'application/json; charset=utf-8',
-    })
-    .done(function(data) {
-        $("#table_users").DataTable().ajax.reload();
-    })
-    .fail(function(data) {
-        if(data.status !== 200) {
-            alert("failed creating user!");
-        }
-        $("#table_users").DataTable().ajax.reload();
-    });
-
-    $('#createUser').modal('toggle');
-
-    event.preventDefault();
-    return false;
-}
-
-
-$(document).ready(function(){
-    $("#logout").click(function () {
-        window.location.replace(log_out);
-    });
-
-
+function initTable() {
     $("#table_users").dataTable({
         "searching": false,
         "paging": false,
@@ -159,7 +119,7 @@ $(document).ready(function(){
                         'beforeSend': function (request) {
                             request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
                         },
-                        'url': urluser + row.id,
+                        'url': urlUser,
                         'type': 'PATCH',
                         'data': JSON.stringify(roles),
                         contentType: 'application/json; charset=utf-8',
@@ -174,24 +134,30 @@ $(document).ready(function(){
 
         },
         'ajax': {
-            'url': urluser,
+            'url': urlUser,
             'type': 'GET',
             'beforeSend': function (request) {
                 request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
             },
             "dataSrc": function (data) {
-                var returns = [];
-                for (var i = 0; i < data.length; i++) {
-                    returns[i] = {
-                        "id": data[i].id,
-                        "name": data[i].name,
-                        "username": data[i].userName,
-                        "roles": data[i].roles
+                return [
+                    {
+                        "id": data.id,
+                        "name": data.name,
+                        "username": data.userName,
+                        "roles": data.roles
                     }
-                }
-                return returns;
+                ];
             }
         }
     });
-});
+}
 
+
+$(document).ready(function(){
+    $("#logout").click(function () {
+        document.cookie = "";
+        window.location.replace(log_out);
+    });
+    initTable(urlUser);
+});
