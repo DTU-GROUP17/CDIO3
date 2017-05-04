@@ -128,31 +128,6 @@ $(document).ready(function(){
             {
                 "data": "roles",
                 "render": function (data, type, full) {
-                    var selected = [];
-                    for (var i = 0; i < data.length; i++) {
-                        selected.push(data[i].name);
-                    }
-                    var $selectPicker = $('#roles_' + full.id);
-                    $selectPicker.selectpicker('val', selected);
-                    $selectPicker.on('changed.bs.select', function (e) {
-                        roles = {
-                            'roles': $(e.currentTarget).val()
-                        };
-                        $.ajax({
-                            'beforeSend': function (request) {
-                                request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
-                            },
-                            'url': urluser + full.id,
-                            'type': 'PATCH',
-                            'data': JSON.stringify(roles),
-                            contentType: 'application/json; charset=utf-8',
-                        })
-                            .fail(function (data) {
-                                if (data.status !== 200) {
-                                    alert("failed deleting user!");
-                                }
-                            });
-                    });
                     return '<select class="selectpicker" id="roles_' + full.id + '" multiple><option>admin</option><option>user</option></select>';
                 }
             },
@@ -167,8 +142,36 @@ $(document).ready(function(){
                 }
             }
         ],
-        "drawCallback": function (settings) {
-            $('.selectpicker').selectpicker();
+        "drawCallback": function () {
+            this.api().data().each(function(row) {
+                var selected = [];
+                row.roles.forEach(function (data) {
+                    selected.push(data.name);
+                });
+
+                var $selectPicker = $('#roles_' + row.id);
+                $selectPicker.selectpicker('val', selected);
+                $selectPicker.on('changed.bs.select', function (e) {
+                    roles = {
+                        'roles': $(e.currentTarget).val()
+                    };
+                    $.ajax({
+                        'beforeSend': function (request) {
+                            request.setRequestHeader("Authorization", "Bearer " + getCookie("token"));
+                        },
+                        'url': urluser + row.id,
+                        'type': 'PATCH',
+                        'data': JSON.stringify(roles),
+                        contentType: 'application/json; charset=utf-8',
+                    })
+                        .fail(function (data) {
+                            if (data.status !== 200) {
+                                alert("failed setting roles!");
+                            }
+                        });
+                });
+            });
+
         },
         'ajax': {
             'url': urluser,
