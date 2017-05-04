@@ -2,6 +2,7 @@
 var log_out = 'index.html';
 var urluser = 'http://localhost:9998/users/';
 
+
 function getCookie(cname) {
 
     var name = cname + "=";
@@ -52,10 +53,14 @@ function deleteUser(user_id) {
         'type': 'DELETE',
         contentType: 'application/json; charset=utf-8',
     })
+    .done(function (data) {
+        $("#table_users").DataTable().ajax.reload();
+    })
     .fail(function(data) {
         if(data.status !== 200) {
             alert("failed deleting user!");
         }
+        $("#table_users").DataTable().ajax.reload();
     });
 }
 
@@ -77,15 +82,18 @@ function createUser(event) {
         'type': 'POST',
         'data': JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
-    }).fail(function(data) {
+    })
+    .done(function(data) {
+        $("#table_users").DataTable().ajax.reload();
+    })
+    .fail(function(data) {
         if(data.status !== 200) {
             alert("failed creating user!");
         }
+        $("#table_users").DataTable().ajax.reload();
     });
 
     $('#createUser').modal('toggle');
-
-    //table.ajax.reload();
 
     event.preventDefault();
     return false;
